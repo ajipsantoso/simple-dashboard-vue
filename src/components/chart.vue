@@ -1,55 +1,25 @@
 <script>
-import { Doughnut } from 'vue-chartjs'
+import { Doughnut, mixins } from 'vue-chartjs'
+const { reactiveProp } = mixins
 
 export default {
   extends: Doughnut,
-  props: ["chartdata", "options"],
+  props: {
+    chartData: {
+      type: Object,
+      default: null
+    },
+    options: {
+      type: Object,
+      default: null
+    }
+  },
+  mixins: [reactiveProp],
   mounted() {
     this.renderChart(
-      {
-        labels: [
-          "North America",
-          "South America",
-          "Australia",
-        ],
-        datasets: [
-         {
-           data: [30, 60, 15],
-           backgroundColor: [
-                '#00A5FF',
-                '#FFB056',
-                '#00FF72',
-            ],
-            borderWidth: 1
-         }
-        ],
-      },
-      {
-        legend: {
-          position: 'bottom',
-          display: true,
-          labels: {
-              usePointStyle: true,
-          },
-        },
-        responsive:true,
-        maintainAspectRatio: false,
-      }
+      this.chartData,
+      this.options,
     );  
   },
-  computed: {
-    chartData: function() {
-      return this.data;
-    }
-  },
-  methods: {
-  },
-  watch: {
-    data: function() {
-      this._chart.destroy();
-      //this.renderChart(this.data, this.options);
-      this.renderLineChart();
-    }
-  }
 }
 </script>

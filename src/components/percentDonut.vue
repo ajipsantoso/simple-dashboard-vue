@@ -48,7 +48,7 @@ export default {
   stroke-opacity: 0.3;
   stroke-linecap: round;
 }
-.note-display .circle__progress { stroke: #AAFF00; }
+.note-display .circle__progress { stroke: white; }
 .percent {
   width: 100%;
   top: 50%;
@@ -59,7 +59,7 @@ export default {
   line-height: 28px;
   transform: translate(-50%, -50%);
 }
-.percent__int { font-size: 20px; }
+.percent__int { font-size: 16px; }
 .circle__progress--fill {
   --initialStroke: 0;
   --transitionDuration: 0;
