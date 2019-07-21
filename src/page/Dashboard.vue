@@ -133,8 +133,9 @@
                     <i class="fas fa-angle-left"></i>
                   </div>
                   <div
-                    class="pager__item pager__item--selectable"
-                    :class="{'pager__item--selected': checkPage(i)}"
+                    class="pager__item"
+                    :class="{'pager__item--selected': checkPage(i),
+                    'pager__item--selectable': !checkPage(i)}"
                     v-for="i in countPager"
                     :key="i"
                     @click="currentPage=i"
@@ -548,5 +549,9 @@ export default {
   }
   .pager__item--selected{
     background: #0EB75A;
+  }
+  .col--name:hover, .col--score:hover, .pager__item--selectable:hover{
+    cursor: pointer;
+    opacity: 0.6;
   }
 </style>
