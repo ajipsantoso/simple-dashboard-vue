@@ -1,4 +1,7 @@
 # simple-dashboard-vue
+Used Dependency :
+-Vue Cli
+-VueChartJs
 
 ## Project setup
 ```
