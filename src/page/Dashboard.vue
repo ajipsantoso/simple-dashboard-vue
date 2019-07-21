@@ -370,7 +370,7 @@ export default {
   }
   .mainBody__item{
     width: 44%;
-    min-width: 480px;
+    min-width: 250px;
     height: 500px;
     display: flex;
     flex-direction: column;
