@@ -3,7 +3,11 @@
     <div class="layout">
       <div class="statusBar">
         <template v-for="(navitem, i) in navData">
-          <div v-if="i!=2" class="statusBar__item statusBar--singleCol flex--col" :class="navitem.class" :key="i">
+          <div v-if="i!=2"
+            class="statusBar__item statusBar--singleCol flex--col"
+            :class="navitem.class"
+            :key="i"
+          >
             <div class="statusBar__title">
               <i
                 v-if="navitem.icon"
@@ -17,7 +21,11 @@
               {{ navitem.desc }}
             </div>
           </div>
-          <div v-else class="statusBar__item statusBar--doubleCol text--light flex--row" :class="navitem[0].class" :key="i">
+          <div v-else
+            class="statusBar__item statusBar--doubleCol text--light flex--row"
+            :class="navitem[0].class"
+            :key="i"
+          >
             <div class="barItem__content">
               <div class="statusBar__title">
                 {{ navitem[0].value }}
@@ -41,7 +49,11 @@
         <div class="mainBody__content">
           <div class="mainBody__item">
             <div class="chart">
-              <doughnut-chart class="chart__content" :chartData="chartsData" :options="chartOption"/>
+              <doughnut-chart
+                class="chart__content"
+                :chartData="chartsData"
+                :options="chartOption"
+              />
             </div>
           </div>
           <div class="mainBody__item">
@@ -74,7 +86,7 @@
                         style="text-align:center; font-size:9px;"
                         :style="{color:'red'}"
                       ><i class="fas fa-circle"></i></td>
-                      <td>{{ data.user }}</td>
+                      <td>{{ data.name }}</td>
                       <td>{{ data.score }}</td>
                     </tr>
                   </tbody>
@@ -129,11 +141,11 @@
   </div>
 </template>
 <script>
-import DoughnutChart from '../components/chart.vue'
-import PercentDonut from '../components/percentDonut'
+import DoughnutChart from '../components/donutChart.vue';
+import PercentDonut from '../components/percentDonut.vue';
 
 export default {
-  components:{
+  components: {
     DoughnutChart,
     PercentDonut,
   },
@@ -141,108 +153,149 @@ export default {
     searchInput: '',
     currentPage: 1,
     focusSearch: false,
-    currentSort:'name',
-    currentSortDir:'asc',
-    navData:[
-      {icon: ['fa-arrow-up', 'text--green'], value: '59', desc: 'Elements', class: ['statusBar--whiteBg', 'text--dark']},
-      {icon: ['fa-arrow-down', 'text--red'], value: '12', desc: 'Versions', class: ['statusBar--whiteBg', 'text--dark']},
-      [{icon: '', value: '425', desc: 'Comits', class: ['statusBar--redBg', 'text--light']}, {} ],
-      {icon: 'fa-user-friends', value: '5', desc: 'Team Member', class: ['statusBar--blueBg', 'text--light']},
-    ],
-    tableData:[
-      { user: 'Noelia O\'Kon', score: 13098.00 },
-      { user: 'Mr. Enid Von PhD', score: 35978.00 },
-      { user: 'Colton Koch', score: 26278.00 },
-      { user: 'Gregory Vandervort', score: 25537.00 },
-      { user: 'Miss Rahsaan Heaney IV', score: 49003.00 },
-      { user: 'Ruby', score: 42003.00 },
-      { user: 'Santoso', score: 13098.00 },
-      { user: 'Alexander', score: 15998.00 },
-      { user: 'Junifar Adam', score: 33468.00 },
-      { user: 'Sutan Rahmat', score: 12008.00 },
-      { user: 'Malik Yuniar', score: 10008.00 },
-      { user: 'Cuaki', score: 42003.00 },
-      { user: 'Bakso', score: 13098.00 },
-      { user: 'Batagor', score: 15998.00 },
-      { user: 'Somay Adam', score: 33468.00 },
-    ],
-    chartsData:{
-        labels: [
-          "North America",
-          "South America",
-          "Australia",
-        ],
-        datasets: [
-         {
-           data: [30, 60, 15],
-           backgroundColor: [
-                '#00A5FF',
-                '#FFB056',
-                '#00FF72',
-            ],
-            borderWidth: 1
-         }
-        ],
+    currentSort: '',
+    currentSortDir: 'asc',
+    navData: [
+      {
+        icon: ['fa-arrow-up', 'text--green'],
+        value: '59',
+        desc: 'Elements',
+        class: ['statusBar--whiteBg', 'text--dark'],
       },
-    chartOption:{
+      {
+        icon: ['fa-arrow-down', 'text--red'],
+        value: '12',
+        desc: 'Versions',
+        class: ['statusBar--whiteBg', 'text--dark'],
+      },
+      [
+        {
+          icon: '',
+          value: '425',
+          desc: 'Comits',
+          class: ['statusBar--redBg', 'text--light'],
+        },
+        {},
+      ],
+      {
+        icon: 'fa-user-friends',
+        value: '5',
+        desc: 'Team Member',
+        class: ['statusBar--blueBg', 'text--light'],
+      },
+    ],
+    tableData: [
+      { name: 'Noelia O\'Kon', score: 13098.00 },
+      { name: 'Mr. Enid Von PhD', score: 35978.00 },
+      { name: 'Colton Koch', score: 26278.00 },
+      { name: 'Gregory Vandervort', score: 25537.00 },
+      { name: 'Miss Rahsaan Heaney IV', score: 49003.00 },
+      { name: 'Ruby', score: 42003.00 },
+      { name: 'Santoso', score: 13098.00 },
+      { name: 'Alexander', score: 15998.00 },
+      { name: 'Junifar Adam', score: 33468.00 },
+      { name: 'Sutan Rahmat', score: 12008.00 },
+      { name: 'Malik Yuniar', score: 10008.00 },
+      { name: 'Cuaki', score: 42003.00 },
+      { name: 'Bakso', score: 13098.00 },
+      { name: 'Batagor', score: 15998.00 },
+      { name: 'Somay Adam', score: 33468.00 },
+    ],
+    chartsData: {
+      labels: [
+        'North America',
+        'South America',
+        'Australia',
+      ],
+      datasets: [
+        {
+          data: [30, 60, 15],
+          backgroundColor: [
+            '#00A5FF',
+            '#FFB056',
+            '#00FF72',
+          ],
+          borderWidth: 1,
+        },
+      ],
+    },
+    chartOption: {
       responsive: true,
       maintainAspectRatio: false,
       legend: {
-          position: 'bottom',
-          display: true,
-          labels: {
-              usePointStyle: true,
-          },
+        position: 'bottom',
+        display: true,
+        labels: {
+          usePointStyle: true,
         },
-      }
+      },
+    },
   }),
   methods: {
+    sort(s) {
+      if (s === this.currentSort) {
+        this.currentSortDir = this.currentSortDir === 'asc' ? 'desc' : 'asc';
+      }
+      this.currentSort = s;
+    },
     movePage(i) {
       let movedPage = this.currentPage + i;
-      if ( movedPage < 1 ) {
+      if (movedPage < 1) {
         movedPage = 1;
       } else if (movedPage > this.countPager) {
-        movedPage = this.countPager
+        movedPage = this.countPager;
       }
       this.currentPage = movedPage;
     },
     checkPage(i) {
-      return this.currentPage == i;
+      return this.currentPage === i;
     },
-    checkPageJump(i,forward){
-      if (i!=0){
+    checkPageJump(i, forward) {
+      let answer = false;
+      if (i !== 0) {
         if (forward) {
-          return this.countPager >= this.currentPage+i;
-        }else{
-          return 1 <= this.currentPage-i;
+          answer = this.countPager >= this.currentPage + i;
+        } else {
+          answer = this.currentPage - i >= 1;
         }
       }
-    }
+      return answer;
+    },
   },
-  computed:{
-    countPager(){
-      let leftEl= (this.displayData.length % 5) != 0 ? 1 : 0;
+  computed: {
+    countPager() {
+      const leftEl = (this.displayData.length % 5) !== 0 ? 1 : 0;
       return Math.floor(this.displayData.length / 5) + leftEl;
     },
-    selectedTableData(){
-      let lastDataIdx = this.currentPage*5;
-      return this.displayData.slice((this.currentPage-1)*5, lastDataIdx);
+    selectedTableData() {
+      const lastDataIdx = this.currentPage * 5;
+      return this.displayData.slice((this.currentPage - 1) * 5, lastDataIdx);
     },
-    displayData(){
-      this.currentPage = 1;
-      let dataArr = [];
-      let search = new RegExp(this.searchInput, 'ig');
-      for (var i = 0; i < this.tableData.length; i++) {
-        if (this.tableData[i].user.match(search)){
-          dataArr.push(this.tableData[i])
+    displayData() {
+      const dataArr = [];
+      const search = new RegExp(this.searchInput, 'ig');
+      for (let i = 0; i < this.tableData.length; i += 1) {
+        if (this.tableData[i].name.match(search)) {
+          dataArr.push(this.tableData[i]);
         }
       }
-      return dataArr;
+      return dataArr.sort((a, b) => {
+        let modifier = 1;
+        if (this.currentSortDir === 'desc') modifier = -1;
+        if (a[this.currentSort] < b[this.currentSort]) return -1 * modifier;
+        if (a[this.currentSort] > b[this.currentSort]) return 1 * modifier;
+        return 0;
+      });
     },
     checkPagee(i) {
-      return this.currentPage == i;
-    }
-  }
+      return this.currentPage === i;
+    },
+  },
+  watch: {
+    searchInput() {
+      this.currentPage = 1;
+    },
+  },
 };
 </script>
 <style scoped>
@@ -270,7 +323,6 @@ export default {
     display: flex;
     flex-direction: column;
     width: 25%;
-    
   }
   .statusBar__item{
     width : 300px;
@@ -417,8 +469,8 @@ export default {
     background-color: rgba(126, 163, 183, 0.4);
   }
   tr.table__header td{
-    border-bottom: 2px solid black;  
-  } 
+    border-bottom: 2px solid black;
+  }
   .pager__item{
     width: 35px;
     height: 100%;
