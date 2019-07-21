@@ -76,15 +76,39 @@
                   <thead>
                     <tr class="table__header">
                       <td class="col--lit"></td>
-                      <td class="col--name" @click="sort('name')">Name</td>
-                      <td class="col--score" @click="sort('score')">Score</td>
+                      <td class="col--name" @click="sort('name')">
+                        <i
+                          v-if="currentSort === 'name' && currentSortDir === 'asc'"
+                          class="fas fa-arrow-up"
+                          style="margin-right:5px;"
+                        ></i>
+                        <i
+                          v-else-if="currentSort === 'name' && currentSortDir === 'desc'"
+                          class="fas fa-arrow-down"
+                          style="margin-right:5px;"
+                        ></i>
+                        Name
+                      </td>
+                      <td class="col--score" @click="sort('score')">
+                        <i
+                          v-if="currentSort === 'score' && currentSortDir === 'asc'"
+                          class="fas fa-arrow-up"
+                          style="margin-right:5px;"
+                        ></i>
+                        <i
+                          v-else-if="currentSort === 'score' && currentSortDir === 'desc'"
+                          class="fas fa-arrow-down"
+                          style="margin-right:5px;"
+                        ></i>
+                        Score
+                      </td>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(data, i) in selectedTableData" :key="i">
                       <td
                         style="text-align:center; font-size:9px;"
-                        :style="{color:'red'}"
+                        :style="{color: tableOrColor[i]}"
                       ><i class="fas fa-circle"></i></td>
                       <td>{{ data.name }}</td>
                       <td>{{ data.score }}</td>
@@ -155,6 +179,7 @@ export default {
     focusSearch: false,
     currentSort: '',
     currentSortDir: 'asc',
+    tableOrColor: ['#FFB856', '#11DB6C', '#D8292C', '#00A5FF', '#A233D6'],
     navData: [
       {
         icon: ['fa-arrow-up', 'text--green'],
@@ -377,7 +402,6 @@ export default {
     justify-content: center;
     align-items: center;
   }
-
   .flex--row{
     display: flex;
     flex-direction: row;
