@@ -4,19 +4,25 @@
       <div class="statusBar">
         <template v-for="(navitem, i) in navData">
           <div v-if="i!=2" class="statusBar__item statusBar--singleCol flex--col" :class="navitem.class" :key="i">
-            <div class="statusbar__title">
+            <div class="statusBar__title">
+              <i
+                v-if="navitem.icon"
+                class="fas"
+                :class="[navitem.icon]"
+                style="font-size:20px; margin-right:5px;"
+              ></i>
               {{ navitem.value }}
             </div>
-            <div class="statusbar__subTitle">
+            <div class="statusBar__subTitle">
               {{ navitem.desc }}
             </div>
           </div>
-          <div v-else class="statusBar__item statusBar--doubleCol light--text flex--row" :class="navitem[0].class" :key="i">
+          <div v-else class="statusBar__item statusBar--doubleCol text--light flex--row" :class="navitem[0].class" :key="i">
             <div class="barItem__content">
-              <div class="statusbar__title">
+              <div class="statusBar__title">
                 {{ navitem[0].value }}
               </div>
-              <div class="statusbar__subTitle">
+              <div class="statusB ar__subTitle">
                 {{ navitem[0].desc }}
               </div>
             </div>
@@ -25,43 +31,6 @@
             </div>
           </div>
         </template>
-        <!-- <div class="statusBar__item statusBar--singleCol flex--col dark--text">
-            <div class="statusbar__title">
-              59
-            </div>
-            <div class="statusbar__subTitle">
-              Elements
-            </div>
-        </div>
-        <div class="statusBar__item statusBar--singleCol  flex--col dark--text">
-            <div class="statusbar__title">
-              12
-            </div>
-            <div class="statusbar__subTitle">
-              Versions
-            </div>
-        </div>
-        <div class="statusBar__item statusBar--doubleCol light--text flex--row">
-          <div class="barItem__content">
-            <div class="statusbar__title">
-              425
-            </div>
-            <div class="statusbar__subTitle">
-              Commits
-            </div>
-          </div>
-          <div class="barItem__content">
-            <percent-donut/>
-          </div>
-        </div>
-        <div class="statusBar__item statusBar--singleCol  flex--col light--text">
-            <div class="statusbar__title">
-              5
-            </div>
-            <div class="statusbar__subTitle">
-              Team Members
-            </div>
-        </div> -->
       </div>
       <div class="mainBody">
         <div class="mainBody__title">
@@ -78,31 +47,33 @@
           <div class="mainBody__item">
             <div class="table__container">
               <div class="table__search">
-                <div class="searchBar">
-                  <i class="fas fa-search"></i>
+                <div class="searchBar" :class="{'searchBar--focus': focusSearch}">
+                  <i class="fas fa-search" :class="{'text--green': focusSearch}"></i>
                   <input
                     class="searchBar__input"
                     type="text"
-                    name=""
-                    id=""
+                    placeholder="Search"
                     v-model="searchInput"
-                    @keyup="typing = !typing"
+                    @focus="focusSearch = true"
+                    @blur="focusSearch = false"
                   >
                 </div>
-                <!-- <div v-if="typing">typing</div> -->
               </div>
               <div class="table__content">
                 <table>
                   <thead>
                     <tr class="table__header">
                       <td class="col--lit"></td>
-                      <td class="col--name">Name</td>
-                      <td class="col--score">Score</td>
+                      <td class="col--name" @click="sort('name')">Name</td>
+                      <td class="col--score" @click="sort('score')">Score</td>
                     </tr>
                   </thead>
                   <tbody>
                     <tr v-for="(data, i) in selectedTableData" :key="i">
-                      <td style="text-align:center;">1</td>
+                      <td
+                        style="text-align:center; font-size:9px;"
+                        :style="{color:'red'}"
+                      ><i class="fas fa-circle"></i></td>
                       <td>{{ data.user }}</td>
                       <td>{{ data.score }}</td>
                     </tr>
@@ -110,7 +81,7 @@
                 </table>
               </div>
               <div class="table__pager">
-                <div class="pager light--text">
+                <div class="pager text--light">
                   <div
                     class="pager__item pager__item--leftRound"
                     :class="{'pager__item--selectable': checkPageJump(currentPage-1,false)}"
@@ -169,12 +140,14 @@ export default {
   data: () => ({
     searchInput: '',
     currentPage: 1,
-    typing: false,
+    focusSearch: false,
+    currentSort:'name',
+    currentSortDir:'asc',
     navData:[
-      {icon: '', value: '59', desc: 'Elements', class: ['statusBar--whiteBg', 'dark--text']},
-      {icon: '', value: '12', desc: 'Versions', class: ['statusBar--whiteBg', 'dark--text']},
-      [{icon: '', value: '425', desc: 'Comits', class: ['statusBar--redBg', 'light--text']}, {} ],
-      {icon: '', value: '5', desc: 'Team Member', class: ['statusBar--blueBg', 'light--text']},
+      {icon: ['fa-arrow-up', 'text--green'], value: '59', desc: 'Elements', class: ['statusBar--whiteBg', 'text--dark']},
+      {icon: ['fa-arrow-down', 'text--red'], value: '12', desc: 'Versions', class: ['statusBar--whiteBg', 'text--dark']},
+      [{icon: '', value: '425', desc: 'Comits', class: ['statusBar--redBg', 'text--light']}, {} ],
+      {icon: 'fa-user-friends', value: '5', desc: 'Team Member', class: ['statusBar--blueBg', 'text--light']},
     ],
     tableData:[
       { user: 'Noelia O\'Kon', score: 13098.00 },
@@ -224,9 +197,6 @@ export default {
       }
   }),
   methods: {
-    check(i) {
-      alert(i);
-    },
     movePage(i) {
       let movedPage = this.currentPage + i;
       if ( movedPage < 1 ) {
@@ -288,24 +258,34 @@ export default {
     margin: 0 100px;
   }
   .statusBar{
+    flex-basis: 1%;
     display: flex;
+    flex-wrap: wrap;
     flex-direction: row;
     justify-content: space-between;
+    align-content: center;
     align-items: center;
   }
   .barItem__content{
     display: flex;
     flex-direction: column;
     width: 25%;
+    
   }
   .statusBar__item{
-    width: 24%;
+    width : 300px;
     height: 90px;
     display: flex;
     background-color: grey;
     align-items: center;
   }
-  .statusbar__subTitle, table{
+  .statusBar__title{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 32px;
+  }
+  .statusBar__subTitle, table{
     font-size: 14px;
   }
   .statusBar--doubleCol{
@@ -331,20 +311,19 @@ export default {
   .mainBody__content{
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
     justify-content: space-between;
     align-items: center;
-    height: 500px;
+    height: 100%;
   }
   .mainBody__item{
     width: 44%;
-    height: 100%;
+    min-width: 480px;
+    height: 500px;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-  }
-  .statusbar__title{
-    font-size: 32px;
   }
 
   .flex--row{
@@ -413,6 +392,7 @@ export default {
   }
   .searchBar{
     border-bottom: 1px solid black;
+    transition: .3s border ease-out;
   }
   .searchBar__input{
     height: 30px;
@@ -420,6 +400,9 @@ export default {
     outline: none;
     margin-left: 10px;
     /* border-bottom: 1px solid black; */
+  }
+  .searchBar--focus{
+    border-bottom: 1px solid #00DD63;
   }
   tr{
     height: 35px;
@@ -453,11 +436,18 @@ export default {
   .statusBar--blueBg{
     background-color: #00A5FF;
   }
-  .dark--text{
+  .text--dark{
     color: black;
   }
-  .light--text{
+  .text--light{
     color: azure;
+  }
+  .text--red{
+    color: #FF1C49
+  }
+  .text--green{
+    transition: .3s color ease-out;
+    color: #00DD63;
   }
   .title--text{
     font-size: 32px;
